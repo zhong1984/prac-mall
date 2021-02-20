@@ -3,28 +3,32 @@
     <nav-bar class="home-nav">
       <div slot="center">Mall</div>
     </nav-bar>
-    <h2>首页</h2>
+
+    <HomeSwiper :banners="banners"></HomeSwiper>
+    <home-recommend-view :recommends="recommends"></home-recommend-view>
   </div>
 </template>
 
 <script>
 import NavBar from "@/components/common/navbar/NavBar";
+import HomeSwiper from "@/views/home/childComponents/HomeSwiper";
+import HomeRecommendView from "@/views/home/childComponents/HomeRecommendView";
 import {getHomeMultiData} from "@/network/home";
 
 export default {
   name: "Home",
-  components: {NavBar},
+  components: {NavBar, HomeSwiper, HomeRecommendView},
   data() {
     return {
-      banner: [],
-      recommend: []
+      banners: [],
+      recommends: []
     }
   },
   created() {
     //  1. 请求多个数据
     getHomeMultiData().then(res => {
-      this.banner = res.data.banner.list
-      this.recommend = res.data.recommend.list
+      this.banners = res.data.banner.list
+      this.recommends = res.data.recommend.list
     })
   }
 }
